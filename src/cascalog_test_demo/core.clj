@@ -7,10 +7,18 @@
             [cascalog.logic.vars :as v]
             [clojure.string :as s]))
 
-;;; This is an incorrect implementation, such as might be written by
-;;; someone who was used to a Lisp in which an empty list is equal to
-;;; nil.
-(defn first-element [sequence default]
-  (if (nil? sequence)
-    default
-    (first sequence)))
+
+;;demonstrate basic query syntax
+;; query creation operator: <- 
+;; what we want: [?x ?sum]
+;; the input: (src ?x ?y)
+;; an operation: sort on x :  (:sort ?x) 
+;; the result, note ':>' : (c/sum ?y :> ?sum)))
+;; modified from example
+
+(defn basic-query [src]
+  (<- [?x ?sum]
+      (src ?x ?y)
+      (:sort ?x)
+      (c/sum ?y :> ?sum)))
+

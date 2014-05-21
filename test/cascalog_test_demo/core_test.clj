@@ -1,17 +1,15 @@
 (ns cascalog-test-demo.core-test
-  (:use midje.sweet)
-  (:use [cascalog-test-demo.core]))
+ (:use [cascalog-test-demo.core]
+       [cascalog.api]
+       [midje sweet cascalog])
+)
 
-(println "You sbould expect to see three failures below.")
+(let [src [[1 2] [1 3]
+           [3 4] [3 6]
+           [5 2] [5 9]]]
+  (facts "basic-query produces 2-tuples from src"
+         (basic-query src) => (produces [[3 10] [1 5] [5 11]])  ;; true
+         (basic-query src) => (produces [[1 5] [3 10] [5 11]]))) ;; true
 
-(facts "about `first-element`"
-  (fact "it normally returns the first element"
-    (first-element [1 2 3] :default) => 1
-    (first-element '(1 2 3) :default) => 1)
 
-  ;; I'm a little unsure how Clojure types map onto the Lisp I'm used to.
-  (fact "default value is returned for empty sequences"
-    (first-element [] :default) => :default
-    (first-element '() :default) => :default
-    (first-element nil :default) => :default
-    (first-element (filter even? [1 3 5]) :default) => :default))
+
