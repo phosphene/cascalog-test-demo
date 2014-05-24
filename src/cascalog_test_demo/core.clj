@@ -32,6 +32,19 @@
       (c/sum ?y :> ?sum)))
 
 
+
+(defn another-basic-query [src]
+  (<- [?x ?sum]
+      (src ?x ?y ?z)
+      (+ ?y ?z :> ?inter)
+      (:sort ?x)
+      (c/sum ?inter :> ?sum)))
+
+
+
+
+
+
 ;;latest cascalog api
 (def/defmapcatfn tokenise [line]
   "reads in a line of string and splits it by a regular expression"
